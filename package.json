@@ -1,122 +1,100 @@
 {
-	"dependencies": {
-		"electron-updater": "^6.6.2",
-		"systeminformation": "^5.25.11",
-		"yt-dlp-wrap-plus": "^2.4.3"
-	},
-	"name": "ytdownloader",
-	"version": "3.20.2",
-	"main": "main.js",
-	"scripts": {
-		"start": "electron .",
-		"dist": "electron-builder",
-		"debug": "electron --inspect=5858 .",
-		"windows": "electron-builder -w",
-		"linux": "electron-builder -l",
-		"mac": "electron-builder -m",
-		"gh-windows": "electron-builder -w --publish=always",
-		"gh-linux": "electron-builder -l --publish=always",
-		"gh-mac": "electron-builder -m --publish=always"
-	},
-	"author": {
-		"name": "Andrew",
-		"email": "aandrew.me@pm.me"
-	},
-	"publish": {
-		"provider": "github",
-		"owner": "aandrew-me",
-		"repo": "ytDownloader",
-		"private": false
-	},
-	"license": "GPL-3.0",
-	"description": "Download videos and audios from YouTube and many other sites",
-	"devDependencies": {
-		"electron": "^30.0.0",
-		"electron-builder": "^26.0.12",
-		"typescript": "^5.3.3"
-	},
-	"build": {
-		"productName": "YTDownloader",
-		"appId": "io.github.aandrew_me.ytdn",
-		"artifactName": "${productName}.${ext}",
-		"files": [
-			"./resources/**/*",
-			"main.js",
-			"./html/**/*",
-			"./resources/**/*",
-			"./public/**/*",
-			"package.json",
-			"./assets/**/*",
-			"./src/*.js",
-			"./ffmpeg/**/*",
-			"!ffmpeg.patch",
-			"translations",
-			"node*"
-		],
-		"electronLanguages": [
-			"en-US"
-		],
-		"mac": {
-			"category": "Utility",
-			"target": [
-				"zip",
-				"dmg"
-			],
-			"artifactName": "${productName}_Mac_${arch}.${ext}"
-		},
-		"dmg": {
-			"contents": [
-				{
-					"x": 130,
-					"y": 220
-				},
-				{
-					"x": 410,
-					"y": 220,
-					"type": "link",
-					"path": "/Applications"
-				}
-			],
-			"sign": false
-		},
-		"asar": false,
-		"directories": {
-			"buildResources": "resources",
-			"output": "release"
-		},
-		"linux": {
-			"target": [
-				"Appimage",
-				"snap",
-				"rpm",
-				"zip",
-				"deb"
-			],
-			"category": "Utility",
-			"artifactName": "${productName}_Linux.${ext}"
-		},
-		"snap": {
-			"grade": "stable",
-			"base": "core22"
-		},
-		"win": {
-			"target": [
-				"nsis",
-				"msi",
-				"zip"
-			],
-			"artifactName": "${productName}_Win.${ext}"
-		},
-		"nsis": {
-			"allowToChangeInstallationDirectory": true,
-			"oneClick": false,
-			"deleteAppDataOnUninstall": true
-		},
-		"msi": {
-			"oneClick": true,
-			"createDesktopShortcut": true,
-			"createStartMenuShortcut": true,
-			"shortcutName": "YTDownloader"
-		}
-	}
+  "name": "ytdownloader",
+  "version": "3.5.0",
+  "description": "A GUI application to download videos and audio from YouTube and other platforms",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder build",
+    "build:linux": "electron-builder build --linux",
+    "build:win": "electron-builder build --win",
+    "build:mac": "electron-builder build --mac",
+    "lint": "eslint src/",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "keywords": [
+    "youtube",
+    "downloader",
+    "electron",
+    "yt-dlp",
+    "video",
+    "audio"
+  ],
+  "author": {
+    "name": "aandrew-me",
+    "url": "https://github.com/aandrew-me"
+  },
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aandrew-me/ytDownloader"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "electron-store": "^8.1.0"
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1",
+    "eslint": "^8.55.0"
+  },
+  "build": {
+    "appId": "com.aandrew-me.ytdownloader",
+    "productName": "ytDownloader",
+    "copyright": "Copyright © 2024",
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "node_modules/**/*"
+    ],
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm",
+        "snap"
+      ],
+      "category": "Utility",
+      "icon": "assets/icons"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64", "ia32"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "assets/icons/icon.ico"
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "icon": "assets/icons/icon.icns",
+      "category": "public.app-category.utilities"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "snap": {
+      "publish": [
+        "github"
+      ]
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "releaseType": "release"
+      }
+    ]
+  }
 }
